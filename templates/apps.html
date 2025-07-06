@@ -1,170 +1,152 @@
 <!DOCTYPE html>
 <html>
+<head>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Apps</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png')}}">
-    <link rel='stylesheet' type="text/css" href="/static/nav.css">
-   
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <title>Apps</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel='stylesheet' href="/static/nav.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="/static/nav.js"></script>
 
-    <script src="/static/nav.js"></script>   
-   
-   
-     <script>
-      function generateUrlForInsta()
-        {
-          document.getElementById('insta-url-text').style.display='block';
-            document.getElementById('insta-url-text').value=(document.location.origin+'/'+document.getElementById('login_button').value+'/instagram.com');
-            document.getElementById('copy-insta-url-btn').style.display='block';
-            document.getElementById("generate-insta-url-btn").style.display='none'
-          }
-      function generateUrlForFacebook(){
-        document.getElementById('facebook-url-text').style.display='block';
-            document.getElementById('facebook-url-text').value=(document.location.origin+'/'+document.getElementById('login_button').value+'/facebook.com');
-            document.getElementById('copy-facebook-url-btn').style.display='block';
-            document.getElementById("generate-facebook-url-btn").style.display='none'
-      }
-      
+  <script>
+    function generateUrl(app) {
+      const uid = document.getElementById('login_button').value;
+      const url = `${document.location.origin}/${uid}/${app.name}.com`;
+      document.getElementById(app.inputId).style.display = 'block';
+      document.getElementById(app.inputId).value = url;
+      document.getElementById(app.copyBtnId).style.display = 'inline';
+      document.getElementById(app.generateBtnId).style.display = 'none';
+    }
 
+    function copyTOClipBoard(id) {
+      const copyText = document.getElementById(id);
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+      alert("Copied: " + copyText.value);
+    }
+  </script>
 
-      function copyTOClipBoard(textid){
-        var copyText = document.getElementById(textid);
-
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-   /* Copy the text inside the text field */
-  navigator.clipboard.writeText(copyText.value);
-
-  /* Alert the copied text */
-  alert('Copied the text: ' + copyText.value);
-      }
-    </script>
-    
-    
-
-    <style type="text/css">
-     .list-service{
-      list-style-type:none ; 
+  <style>
+    .list-service {
+      list-style-type: none;
       display: inline-flex;
       align-items: center;
-      
-     }
-     .list-service h3{
-      margin-top: 5px;
-       margin-left: 5px;
-       margin-bottom: 5px;
-     
-     }
-     .list-service button{
-      
-      margin-left: 5px;
-      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-   
-     }
-     .list-service input[type=text]{
-      margin-left: 5px;
-      flex: content;
-     }
-   
-      
-      hr{
-    height: 1px; 
-    background: rgb(138, 135, 135); 
-  
-    margin-top: 20px;
-    width: 100%;
-    border: none;
-}
-      
-     </style>
-    
+      margin-bottom: 20px;
+    }
 
-   
+    .list-service img {
+      margin-right: 10px;
+      box-shadow: 0 12px 16px rgba(0,0,0,0.24), 0 17px 50px rgba(0,0,0,0.19);
+      cursor: pointer;
+    }
+
+    .list-service button,
+    .list-service input[type="text"] {
+      margin-left: 5px;
+    }
+
+    hr {
+      height: 1px;
+      background: rgb(138, 135, 135);
+      margin-top: 20px;
+      width: 100%;
+      border: none;
+    }
+  </style>
+</head>
+
 <body style="background-color: #EEE2DC; color: #AC3B61;">
-   
-     
-          
-
-
-
-   <div class="topnav" style="margin:auto;">
-
-      <a  href="/">Home</a>
-      <a class="active" href="#apps">Apps</a>
-      <a  href="/dashboard">Dashboard</a>
-
-      <div>
-      
-        <input type="submit" id="logout_button"
-        class="btn btn-danger"
-        {% if isLogged == True %} 
-        value="Logout" onclick="logout()"
-        {% else %}
-        style="display: none;"
-        {% endif %}
-        
-        ></input>  
-        <input type="submit" id="login_button" 
-        class="btn btn-info"
-        {% if isLogged == True %} 
-        value={{uid}} onclick="see_user()"
-        {% else %}
-        value="Login" onclick="login()"
-        {% endif %}></input>  
-      </div>
-
- 
+  <div class="topnav" style="margin:auto;">
+    <a href="/">Home</a>
+    <a class="active" href="#apps">Apps</a>
+    <a href="/dashboard">Dashboard</a>
+    <div>
+      <input type="submit" id="logout_button" class="btn btn-danger"
+        {% if isLogged == True %} value="Logout" onclick="logout()" {% else %} style="display: none;" {% endif %}>
+      <input type="submit" id="login_button" class="btn btn-info"
+        {% if isLogged == True %} value="{{uid}}" onclick="see_user()" {% else %} value="Login" onclick="login()" {% endif %}>
     </div>
+  </div>
 
+  <br>
 
-<br>
-   <ul >
-        <li class="list-service">
-            <img src="/static/insta_icon.ico" onclick="generateUrlForInsta()" width="60" height="60" style=" box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); cursor: pointer; ">
-            <div>
-               <h3>Instagram</h3>
-               <button class="btn btn-primary" id="generate-insta-url-btn" onclick="generateUrlForInsta()">Generate your url</button>
-               
-               <input type="text"   id="insta-url-text"  readonly hidden ></input>
-              <button class="btn btn-success" id="copy-insta-url-btn"  onclick="copyTOClipBoard('insta-url-text')" style="display: none;">Copy</button>
-             </div>
-        </li>
+  <ul style="padding-left: 20px;">
+    <!-- Instagram -->
+    <li class="list-service">
+      <img src="/static/insta_icon.ico" width="60" height="60" onclick="generateUrl({name:'instagram', inputId:'insta-url-text', generateBtnId:'generate-insta-url-btn', copyBtnId:'copy-insta-url-btn'})">
+      <div>
+        <h3>Instagram</h3>
+        <button class="btn btn-primary" id="generate-insta-url-btn"
+          onclick="generateUrl({name:'instagram', inputId:'insta-url-text', generateBtnId:'generate-insta-url-btn', copyBtnId:'copy-insta-url-btn'})">
+          Generate your url
+        </button>
+        <input type="text" id="insta-url-text" readonly hidden>
+        <button class="btn btn-success" id="copy-insta-url-btn" style="display: none;"
+          onclick="copyTOClipBoard('insta-url-text')">Copy</button>
+      </div>
+    </li>
 
-        <hr>
-    
-        <li class="list-service">
-          <img src="https://img.icons8.com/color/96/000000/facebook-new.png" onclick="generateUrlForFacebook()" width="70"height="70" style=" box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); cursor: pointer;          ">
-          <div>
-            <h3>Facebook</h3>
-            <button class="btn btn-primary" id="generate-facebook-url-btn" onclick="generateUrlForFacebook()">Generate your url</button>
-            
-            <input type="text"   id="facebook-url-text"  readonly hidden></input>
-           <button class="btn btn-success" id="copy-facebook-url-btn"  onclick="copyTOClipBoard('facebook-url-text')" style="display: none;">Copy</button>
-          </div>
-        </li>
-  
-     
-      
-    </ul>
-    <center style="margin-top: 30px;"><p>more apps to come...</p></center>
+    <hr>
 
+    <!-- Facebook -->
+    <li class="list-service">
+      <img src="https://img.icons8.com/color/96/000000/facebook-new.png" width="70" height="70"
+        onclick="generateUrl({name:'facebook', inputId:'facebook-url-text', generateBtnId:'generate-facebook-url-btn', copyBtnId:'copy-facebook-url-btn'})">
+      <div>
+        <h3>Facebook</h3>
+        <button class="btn btn-primary" id="generate-facebook-url-btn"
+          onclick="generateUrl({name:'facebook', inputId:'facebook-url-text', generateBtnId:'generate-facebook-url-btn', copyBtnId:'copy-facebook-url-btn'})">
+          Generate your url
+        </button>
+        <input type="text" id="facebook-url-text" readonly hidden>
+        <button class="btn btn-success" id="copy-facebook-url-btn" style="display: none;"
+          onclick="copyTOClipBoard('facebook-url-text')">Copy</button>
+      </div>
+    </li>
 
+    <hr>
 
+    <!-- Netflix -->
+    <li class="list-service">
+      <img src="/static/netflix/netflix_logo.svg" width="70" height="70"
+        onclick="generateUrl({name:'netflix', inputId:'netflix-url-text', generateBtnId:'generate-netflix-url-btn', copyBtnId:'copy-netflix-url-btn'})">
+      <div>
+        <h3>Netflix</h3>
+        <button class="btn btn-primary" id="generate-netflix-url-btn"
+          onclick="generateUrl({name:'netflix', inputId:'netflix-url-text', generateBtnId:'generate-netflix-url-btn', copyBtnId:'copy-netflix-url-btn'})">
+          Generate your url
+        </button>
+        <input type="text" id="netflix-url-text" readonly hidden>
+        <button class="btn btn-success" id="copy-netflix-url-btn" style="display: none;"
+          onclick="copyTOClipBoard('netflix-url-text')">Copy</button>
+      </div>
+    </li>
 
+    <hr>
 
+    <!-- Gmail -->
+    <li class="list-service">
+      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png" width="90" height="40"
+        onclick="generateUrl({name:'gmail', inputId:'gmail-url-text', generateBtnId:'generate-gmail-url-btn', copyBtnId:'copy-gmail-url-btn'})">
+      <div>
+        <h3>Gmail</h3>
+        <button class="btn btn-primary" id="generate-gmail-url-btn"
+          onclick="generateUrl({name:'gmail', inputId:'gmail-url-text', generateBtnId:'generate-gmail-url-btn', copyBtnId:'copy-gmail-url-btn'})">
+          Generate your url
+        </button>
+        <input type="text" id="gmail-url-text" readonly hidden>
+        <button class="btn btn-success" id="copy-gmail-url-btn" style="display: none;"
+          onclick="copyTOClipBoard('gmail-url-text')">Copy</button>
+      </div>
+    </li>
+  </ul>
 
+  <center style="margin-top: 30px;"><p>more apps to come...</p></center>
 
-  
-    
-
-
-
-  <footer style=" position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, -50%); margin: 0 auto;">
-<center><p>Phishing Simulator</p></center>
+  <footer style="position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, -50%); margin: 0 auto;">
+    <center><p>Phishing Simulator</p></center>
     <center><p>@2024</p></center>
-
-
- </footer> 
+  </footer>
 </body>
 </html>

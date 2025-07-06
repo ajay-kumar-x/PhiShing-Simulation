@@ -7,3 +7,4 @@ TrappedData.db
 UserData.db
 *.log
 *.pyc
+.env

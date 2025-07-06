@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url("/static/netflix/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+}
+
+.netflix-container {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.login-box {
+    background: rgba(0,0,0,0.75);
+    padding: 40px;
+    border-radius: 8px;
+    width: 300px;
+}
+
+.login-box h1 {
+    margin-bottom: 20px;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #b81d24;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.help-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ccc;
+}
